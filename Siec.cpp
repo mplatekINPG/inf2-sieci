@@ -4,6 +4,7 @@
 #include <vector>
 #include <list>
 
+//dyrektywy using, zamiast nielubiane using namespace. Raczej wystarcz¹
 using std::vector;
 using std::list;
 using std::cout;
@@ -18,7 +19,7 @@ Product::Product(int id)
 	_id = id;
 }
 
-Product::Product()
+Product::getID()
 {
 	return _id;
 }
@@ -36,13 +37,27 @@ Ramp::addReceiver(Worker* w, float pref = -1)
 {
 	rampReceiver.push_back(w);
 	
-	if (pref != -1)
-	{
+	//1 odbiorca, na pewno do niego
+	if (rampReceiver.size() == 1) 
+		rampReceiverPref.push_back(1.0);
 		
+	/*Dodanie nowego odbiorcy do puli odbiorców danego wêz³a 
+	bez precyzowania prawdopodobieñstwa powoduje ustawienie 
+	preferencji na rozk³ad jednostajny.*/
+	else if (pref == -1)
+	{
+		for (int i=0; i<rampReceiver.size()-1; i++)
+			rampReceiver[i] = 1/( rampReceiver.size() + 1 );
+			
+		rampReceiver.push_back(rampReceiver[0]);
 	}
+	//jak pref podany, to przelicza na nowo dla wszystkich (wzór od K³eczka)
 	else
 	{
-		
+		for (int i=0; i<rampReceiver.size()-1; i++)
+			rampReceiver[i] = (1 - pref) * rampReceiver[i];
+			
+		rampReceiver.push_back(pref);
 	}
 }
 
@@ -89,13 +104,22 @@ Worker::addReceiver(Worker* w, float pref = -1)
 {
 	workerReceiver.push_back(w);
 	
-	if (pref != -1)
+	//tak jak w rampie
+	if (workerReceiver.size() == 1) 
+		workerReceiverPref.push_back(1.0);
+	else if (pref == -1)
 	{
-		
+		for (int i=0; i<workerReceiver.size()-1; i++)
+			workerReceiver[i] = 1/( workerReceiver.size() + 1 );
+			
+		workerReceiver.push_back(workerReceiver[0]);
 	}
 	else
 	{
-		
+		for (int i=0; i<workerReceiver.size()-1; i++)
+			workerReceiver[i] = (1 - pref) * workerReceiver[i];
+			
+		workerReceiver.push_back(pref);
 	}
 }
 

@@ -21,7 +21,7 @@ class Product
 class Receiver
 {
 	public:
-		addProduct( Product* p ) = 0;
+		virtual void addProduct( Product* p ) = 0;
 };
 
 class Worker : public Receiver;
@@ -36,8 +36,8 @@ class Ramp
 		
 	public:
 		Ramp( float freq );
-		addReceiver( Worker* w, float pref = -1);
-		update( float time );
+		void addReceiver( Worker* w, float pref = -1);
+		void update( float time );
 		
 		float getFrequency();
 		std::vector<Worker*> getReceivers();
@@ -49,7 +49,7 @@ class Magazine : public Receiver
 		std::vector<Product*> products;
 	
 	public:
-		addProduct( Product* p);
+		void addProduct( Product* p);
 		
 		std::vector<Product*> getProducts();
 };
@@ -66,9 +66,9 @@ class Worker : public Receiver
 	
 	public:
 		Worker( float time, QueueType queue );
-		addReceiver( Receiver* r, float pref = -1 );
-		addProduct( Product* p );
-		work( float time );
+		void addReceiver( Receiver* r, float pref = -1 );
+		void addProduct( Product* p );
+		void work( float time );
 		
 		QueueType getQueueType();
 		std::list<Product*> getProducts();
