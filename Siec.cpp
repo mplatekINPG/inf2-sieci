@@ -10,6 +10,7 @@ using std::list;
 using std::cout;
 using std::cin;
 
+
 //-------------------------------------------------------------------------------//
 //									Product
 //-------------------------------------------------------------------------------//
@@ -63,7 +64,23 @@ Ramp::addReceiver(Worker* w, float pref = -1)
 
 Ramp::update(float time)
 {
-	
+	if (time%frequency == 0)
+	{
+		Product p1(/*trzeba znaleŸc sposób na iterowanie produktów*/);
+		
+		srand(time(NULL));
+		int choice = rand()%100;
+		
+		if ( rampReceiver.size() != 0 )
+			for (int i=0; i<rampReceiver.size() - 2; i++)  //mysla³em, czy da sie tu skorzystaæ z range-for, ale nie mam pomys³u jak
+			{
+				if (choice < rampReceiverPref[i+1]*100)
+				{
+					(rampReceiver[i]).addProduct(p1);
+					break;
+				}
+			}
+	}
 }
 
 Ramp::getFrequency()
@@ -130,7 +147,8 @@ Worker::addProduct(Product* p)
 
 Worker::work(float time)
 {
-	
+	if (time == endTime)
+		
 }
 
 Worker::getQueueType()
