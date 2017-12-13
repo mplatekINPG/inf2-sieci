@@ -1,6 +1,10 @@
 #include <iostream>
-#include <Siec.h>
-#include <Siec.cpp>
+#include <vector>
+#include <map>
+
+#include "Siec.h"
+#include "Factory.h"
+#include "Queue.h"
 
 /* run this program using the console pauser or add your own getch, system("pause") or input loop */
 
