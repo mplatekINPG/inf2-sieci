@@ -8,32 +8,30 @@ class ProductQueue
 	private:
 		QueueType qType;
 		
+	protected:
+		std::list<Product*> products;
+		
 	public:
-		push( Product* p);
-		pop( Product* p);
-		QueueType getQueueType();
+		virtual void push( Product* p) = 0;
+		virtual Product* pop() = 0;
+		QueueType getQueueType() const {return qType};
 };
 
 class ProductQueueFIFO : public ProductQueue
 {
 	private:
-		std::list<Product*> products;		//bo K³eczek mówi³, ¿e ze stack i queue s¹ problemy, a z list¹ nie ma
-		//std::queue<Product*> products;
+
 	public:
 		void push( Product* p);
-		void pop( Product* p);
-		//QueueType getQueueType();
+		Product* pop();
 };
 
 class ProductQueueLIFO : public ProductQueue
 {
 	private:
-		std::list<Product*> products;
-		//std::stack<Product* p> products;	
 	
 	public:
 		void push( Product* p);
-		void pop( Product* p);
-		//QueueType getQueueType();
+		Product* pop();
 };
 #endif
