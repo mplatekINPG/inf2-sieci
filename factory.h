@@ -72,10 +72,12 @@ class Worker : public Receiver, public Sender
 		float workTime;
 		float endWork;
 		ProductQueue* products;
+		Product* currentProduct;
 
 	public:
 		Worker( float time, QueueType queue );
 		void work( float time );
+		void addProduct( Product* p);
 		
 		QueueType getQueueType();
 		ProductQueue* getProducts();

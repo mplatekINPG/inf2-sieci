@@ -5,7 +5,7 @@
 #include <vector>
 #include <list>
 
-//dyrektywy using, zamiast nielubiane using namespace. Raczej wystarcz¹
+//dyrektywy using, zamiast nielubiane using namespace. Raczej wystarczï¿½
 using std::vector;
 using std::map;
 using std::cout;
@@ -37,12 +37,13 @@ Product::getID()
 
 Sender::addReceiver()
 {
-	
+
+	Worker:: getQue
 }
 
 Sender::send()
 {
-	
+
 }
 
 //-------------------------------------------------------------------------------//
@@ -64,27 +65,27 @@ Ramp::Ramp(float freq)
 /* Ramp::addReceiver(Worker* w, float pref = -1)
 {
 	rampReceiver.push_back(w);
-	
+
 	//1 odbiorca, na pewno do niego
-	if (rampReceiver.size() == 1) 
+	if (rampReceiver.size() == 1)
 		rampReceiverPref.push_back(1.0);
-		
-	/*Dodanie nowego odbiorcy do puli odbiorców danego wêz³a 
-	bez precyzowania prawdopodobieñstwa powoduje ustawienie 
-	preferencji na rozk³ad jednostajny.*/
+
+	/*Dodanie nowego odbiorcy do puli odbiorcï¿½w danego wï¿½zï¿½a
+	bez precyzowania prawdopodobieï¿½stwa powoduje ustawienie
+	preferencji na rozkï¿½ad jednostajny.*/
 	/*else if (pref == -1)
 	{
 		for (int i=0; i<rampReceiver.size()-1; i++)
 			rampReceiver[i] = 1/( rampReceiver.size() + 1 );
-			
+
 		rampReceiver.push_back(rampReceiver[0]);
 	}
-	//jak pref podany, to przelicza na nowo dla wszystkich (wzór od K³eczka)
+	//jak pref podany, to przelicza na nowo dla wszystkich (wzï¿½r od Kï¿½eczka)
 	else
 	{
 		for (int i=0; i<rampReceiver.size()-1; i++)
 			rampReceiver[i] = (1 - pref) * rampReceiver[i];
-			
+
 		rampReceiver.push_back(pref);
 	}
 }*/
@@ -93,13 +94,13 @@ Ramp::update(float time)
 {
 	if (time%frequency == 0)
 	{
-		Product p1(/*trzeba znaleŸc sposób na iterowanie produktów*/);
-		
+		Product p1(/*trzeba znaleï¿½c sposï¿½b na iterowanie produktï¿½w*/);
+
 		srand(time(NULL));
 		int choice = rand()%100;
-		
+
 		if ( rampReceiver.size() != 0 )
-			for (int i=0; i<rampReceiver.size() - 2; i++)  //mysla³em, czy da sie tu skorzystaæ z range-for, ale nie mam pomys³u jak
+			for (int i=0; i<rampReceiver.size() - 2; i++)  //myslaï¿½em, czy da sie tu skorzystaï¿½ z range-for, ale nie mam pomysï¿½u jak
 			{
 				if (choice < rampReceiverPref[i+1]*100)
 				{
@@ -139,34 +140,49 @@ Worker::Worker(float time, QueueType queue)
 	qType = queue;
 }
 
-/*Worker::addReceiver(Worker* w, float pref = -1)
+Worker::addReceiver(Worker* w, float pref = -1)
 {
 	workerReceiver.push_back(w);
-	
+
 	//tak jak w rampie
-	if (workerReceiver.size() == 1) 
+	if (workerReceiver.size() == 1)
 		workerReceiverPref.push_back(1.0);
 	else if (pref == -1)
 	{
-		for (int i=0; i<workerReceiver.size()-1; i++)
+		for (int i=0; i < workerReceiver.size()-1; i++)
 			workerReceiver[i] = 1/( workerReceiver.size() + 1 );
-			
+
 		workerReceiver.push_back(workerReceiver[0]);
 	}
 	else
 	{
-		for (int i=0; i<workerReceiver.size()-1; i++)
+		for (int i=0; i < workerReceiver.size()-1; i++)
 			workerReceiver[i] = (1 - pref) * workerReceiver[i];
-			
+
 		workerReceiver.push_back(pref);
 	}
-}*/
+}
 
 
 Worker::work(float time)
 {
-	if (time == endTime)
-		
+	if (time == endWork)
+	{
+		send(currentProduct);
+		currentProduct = products.pop();
+		endWork += workTime;
+	}
+
 }
-
-
+Worker:: addProduct( Product* p)
+{
+	products.push(p);
+}
+Worker:: getQueueType()
+{
+	return qType;
+}
+Worker:: getProducts()
+{
+	return products;
+}
