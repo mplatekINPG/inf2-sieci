@@ -48,7 +48,7 @@ class Ramp : public Sender
 		
 	public:
 		Ramp( float freq );
-		void update( float time );
+		void update( float time, Product* p );
 		
 		float getFrequency();
 };

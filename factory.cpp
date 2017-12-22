@@ -4,12 +4,15 @@
 #include <iostream>
 #include <vector>
 #include <list>
+#include <map>
+#include <utility>
 
 //dyrektywy using, zamiast nielubiane using namespace. Raczej wystarcz¹
 using std::vector;
 using std::map;
 using std::cout;
 using std::cin;
+
 
 
 //-------------------------------------------------------------------------------//
@@ -35,22 +38,48 @@ Product::getID()
 //									Sender
 //-------------------------------------------------------------------------------//
 
-Sender::addReceiver()
-{
-	
+Sender::addReceiver( Receiver* r, float pref = -1)
+{	
+	if (receivers.size() == 0) 
+		receiver.insert(std::pair<Receiver*,float>(r,1.0));
+		
+/*	Dodanie nowego odbiorcy do puli odbiorców danego wêz³a 
+	bez precyzowania prawdopodobieñstwa powoduje ustawienie 
+	preferencji na rozk³ad jednostajny.*/
+	else if (pref == -1)
+	{
+		for (auto i=receivers.begin(); i!=receivers.end(); i++)
+			i->second = 1/( receivers.size() + 1 );
+			
+		receivers.insert(std::pair<Receiver*,float>(r,receivers[0]->second);
+	}
+	//jak pref podany, to przelicza na nowo dla wszystkich (wzór od K³eczka)
+	else
+	{
+		for (auto i=receivers.begin(); i!=receivers.end(); i++)
+			i->second = (1 - pref) * i->second;
+			
+		receivers.insert(std::pair<Receiver*,float>(r,pref);
+	}
 }
 
-Sender::send()
-{
-	
+Sender::send( Product *p)
+{	
+	srand(time(NULL));
+	int choice = rand()%100;
+	float sum = 0;
+
+	if ( receivers.size() != 0 )
+		for (auto i: receivers)  //mysla³em, czy da sie tu skorzystaæ z range-for, ale nie mam pomys³u jak
+		{
+			sum += i->second * 100;
+			if (choice <= sum)
+			{
+				(i->first)->addProduct(p);
+				break;
+			}
+		}
 }
-
-//-------------------------------------------------------------------------------//
-//									Receiver
-//-------------------------------------------------------------------------------//
-
-
-
 
 //-------------------------------------------------------------------------------//
 //									Ramp
@@ -61,52 +90,11 @@ Ramp::Ramp(float freq)
 	frequency = freq;
 }
 
-/* Ramp::addReceiver(Worker* w, float pref = -1)
-{
-	rampReceiver.push_back(w);
-	
-	//1 odbiorca, na pewno do niego
-	if (rampReceiver.size() == 1) 
-		rampReceiverPref.push_back(1.0);
-		
-	/*Dodanie nowego odbiorcy do puli odbiorców danego wêz³a 
-	bez precyzowania prawdopodobieñstwa powoduje ustawienie 
-	preferencji na rozk³ad jednostajny.*/
-	/*else if (pref == -1)
-	{
-		for (int i=0; i<rampReceiver.size()-1; i++)
-			rampReceiver[i] = 1/( rampReceiver.size() + 1 );
-			
-		rampReceiver.push_back(rampReceiver[0]);
-	}
-	//jak pref podany, to przelicza na nowo dla wszystkich (wzór od K³eczka)
-	else
-	{
-		for (int i=0; i<rampReceiver.size()-1; i++)
-			rampReceiver[i] = (1 - pref) * rampReceiver[i];
-			
-		rampReceiver.push_back(pref);
-	}
-}*/
-
-Ramp::update(float time)
+Ramp::update(float time, Product* p)
 {
 	if (time%frequency == 0)
 	{
-		Product p1(/*trzeba znaleŸc sposób na iterowanie produktów*/);
-		
-		srand(time(NULL));
-		int choice = rand()%100;
-		
-		if ( rampReceiver.size() != 0 )
-			for (int i=0; i<rampReceiver.size() - 2; i++)  //mysla³em, czy da sie tu skorzystaæ z range-for, ale nie mam pomys³u jak
-			{
-				if (choice < rampReceiverPref[i+1]*100)
-				{
-					(rampReceiver[i]).addProduct(p1);
-					break;
-				}
-			}
+		send(p);
 	}
 }
 
