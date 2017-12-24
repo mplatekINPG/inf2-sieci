@@ -44,12 +44,14 @@ class Magazine : public Receiver;
 class Ramp : public Sender
 {
 	private:
+		int _id;
 		float frequency;
 		
 	public:
-		Ramp( float freq );
+		Ramp( int id, float freq );
 		void update( float time, Product* p );
 		
+		int getID();
 		float getFrequency();
 };
 
@@ -69,16 +71,18 @@ class Magazine : public Receiver
 class Worker : public Receiver, public Sender
 {
 	private:
+		int _id;
 		float workTime;
 		float endWork;
 		ProductQueue* products;
 		Product* currentProduct;
 
 	public:
-		Worker( float time, QueueType queue );
+		Worker( int id, float time, QueueType queue );
 		void work( float time );
 		void addProduct( Product* p);
 		
+		int getID();
 		QueueType getQueueType();
 		ProductQueue* getProducts();
 }

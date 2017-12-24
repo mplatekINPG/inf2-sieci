@@ -89,8 +89,9 @@ Sender::addReceiver()
 //									Ramp
 //-------------------------------------------------------------------------------//
 
-Ramp::Ramp(float freq)
+Ramp::Ramp(int id, float freq)
 {
+	_id = id;
 	frequency = freq;
 }
 
@@ -100,6 +101,11 @@ Ramp::update(float time, Product* p)
 	{
 		send(p);
 	}
+}
+
+Ramp::getID()
+{
+	return _id;
 }
 
 Ramp::getFrequency()
@@ -125,8 +131,9 @@ Magazine::getProducts()
 //									Worker
 //-------------------------------------------------------------------------------//
 
-Worker::Worker(float time, QueueType queue)
+Worker::Worker(int id, float time, QueueType queue)
 {
+	_id = id;
 	workTime = time;
 	qType = queue;
 }
@@ -145,6 +152,11 @@ Worker::work(float time)
 Worker:: addProduct( Product* p)
 {
 	products.push(p);
+}
+
+Worker:: getID()
+{
+	return _id;
 }
 
 Worker:: getQueueType()
