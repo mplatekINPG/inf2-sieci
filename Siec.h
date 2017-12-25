@@ -4,9 +4,9 @@
 class Net
 {
 	private:
-		std::vector<Ramp> ramps;
-		std::vector<Worker> workers;
-		std::vector<Magazine> magazines;	// Czy nie powinny to byæ wskaŸniki??
+		std::vector<Ramp*> ramps;
+		std::vector<Worker*> workers;
+		std::vector<Magazine*> magazines;	// Czy nie powinny to byæ wskaŸniki??
 	
 	public:
 		void create();
