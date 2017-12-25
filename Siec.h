@@ -9,6 +9,7 @@ class Net
 		std::vector<Magazine*> magazines;	// Czy nie powinny to byæ wskaŸniki??
 	
 	public:
+		int endingSimulationTime;
 		void create();
 		void update();
 		void report();

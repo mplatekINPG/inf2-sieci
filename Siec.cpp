@@ -28,10 +28,10 @@ Net::create()
     string linia;
     float pref;
         
-    dane.open( ".txt", std::ios::in)
+    dane.open( /*"TU PODAJEMY ŒCIE¯KÊ DO PLIKU.txt"*/, std::ios::in)
     if (dane.good() == false)
 	{
-		cout << "brak dostepu do piku !!"
+		cout << "brak dostepu do pliku !!"
 		return ;
 	}
 	
@@ -124,7 +124,23 @@ Net::create()
 
 Net::update()
 {
+	create();
+	int currentTime = 0;
+	endingSimulationTime = /*SK¥D TO WZI¥Æ??*/ ;
 	
+	while ( currentTime < endingSimulationTime)
+	{
+		//-------------tu trza stworzyæ producta----------------//
+		
+		for (auto i: ramps)
+			i.update(currentTime, /*PRODUKT*/);
+		
+		for (auto i: workers)
+			i.work(currentTime);
+		
+		//----//
+		currentTime++;
+	}
 }
 
 //--------------------------------------------------------------//
@@ -132,5 +148,12 @@ Net::update()
 
 Net::report()
 {
+	std::fstream raportStruktury;
+	raportStruktury.open( "struktura_sieci.txt", std::ios::out );
+	
+	std::fstream raportSymulacji;
+	raportSymulacji.open( "stan_symulacji.txt", std::ios::out );
+	
+	
 	
 }
