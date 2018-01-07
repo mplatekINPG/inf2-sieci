@@ -81,9 +81,13 @@ void Sender::send( Product *p)
 		}
 }
 
-map<Receiver*,float> Sender::getReceivers()
+void Sender::getReceivers()
 {
+	if (receivers.size() == 0)
+		cout << "Brak polaczen\n";
 	
+	for (auto i: receivers)
+		cout << i->first << ", p = " << i->second << endl; 
 }
 
 //-------------------------------------------------------------------------------//
@@ -158,6 +162,11 @@ void Worker::addProduct( Product* p)
 int Worker:: getID()
 {
 	return _id;
+}
+
+float Worker:: getWorkTime()
+{
+	return workTime;
 }
 
 QueueType Worker:: getQueueType()

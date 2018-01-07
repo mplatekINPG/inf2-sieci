@@ -17,6 +17,8 @@ using std::map;
 using std::cout;
 using std::cin;
 using std::string;
+using std::stoi;
+using std::stof;
 
 //--------------------------------------------------------------//
 //--------------------------------------------------------------//
@@ -150,6 +152,31 @@ void Net::report()
 {
 	std::fstream raportStruktury;
 	raportStruktury.open( "struktura_sieci.txt", std::ios::out );
+	
+	if ( raportStruktury.good() )
+	{
+		raportStruktury << "1. Ramps" << endl << endl;
+		for (auto i: ramps)
+		{
+			raportStruktury << "\t ramp #" << i.getID() << "\n\tfreq = " << i.getFrequency() << endl;
+			raportStruktury << "\tReceivers:\n";
+			raportStruktury << "\t\t" << i.getReceivers(); <<endl;
+		}
+		
+		raportStruktury << endl << "2. Workers" << endl << endl;
+		for (auto i: workers)
+		{
+			raportStruktury << "\t worker #" << i.getID() << "\n\twork time = " << i.getWorkTime() << endl;
+			raportStruktury << "\tReceivers:\n";
+			raportStruktury << "\t\t" << i.getReceivers(); <<endl;
+		}
+		
+		raportStruktury << endl << "3. Storehouses" << endl << endl;
+		for (auto i: magazines)
+		{
+		/*	raportStruktury << "\t Storehouse #" << i.getID() << endl << endl*/;
+		}
+	}
 	
 	std::fstream raportSymulacji;
 	raportSymulacji.open( "stan_symulacji.txt", std::ios::out );

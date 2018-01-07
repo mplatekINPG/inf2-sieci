@@ -36,7 +36,7 @@ class Sender
 	public:
 		void addReceiver( Receiver* r, float pref = -1 );
 		void send( Product* p );
-		std::map<Receiver*,float> getReceivers();
+		void getReceivers();
 };
 
 
@@ -84,6 +84,7 @@ class Worker : public Receiver, public Sender
 		void addProduct( Product* p);
 		
 		int getID();
+		float getWorkTime();
 		QueueType getQueueType();
 		ProductQueue* getProducts();
 };
