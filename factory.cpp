@@ -24,7 +24,7 @@ Product::Product(int id)
 	_id = id;
 }
 
-Product::getID()
+int Product::getID()
 {
 	return _id;
 }
@@ -38,7 +38,7 @@ Product::getID()
 //									Sender
 //-------------------------------------------------------------------------------//
 
-Sender::addReceiver( Receiver* r, float pref = -1)
+void Sender::addReceiver( Receiver* r, float pref = -1)
 {	
 	if (receivers.size() == 0) 
 		receiver.insert(std::pair<Receiver*,float>(r,1.0));
@@ -63,7 +63,7 @@ Sender::addReceiver( Receiver* r, float pref = -1)
 	}
 }
 
-Sender::send( Product *p)
+void Sender::send( Product *p)
 {	
 	srand(time(NULL));
 	int choice = rand()%100;
@@ -79,6 +79,12 @@ Sender::send( Product *p)
 				break;
 			}
 		}
+}
+
+map<Receiver*,float> Sender::getReceivers()
+{
+	
+}
 
 //-------------------------------------------------------------------------------//
 //									Ramp
@@ -90,7 +96,7 @@ Ramp::Ramp(int id, float freq)
 	frequency = freq;
 }
 
-Ramp::update(float time, Product* p)
+void Ramp::update(float time, Product* p)
 {
 	if (time%frequency == 0)
 	{
@@ -98,12 +104,12 @@ Ramp::update(float time, Product* p)
 	}
 }
 
-Ramp::getID()
+int Ramp::getID()
 {
 	return _id;
 }
 
-Ramp::getFrequency()
+float Ramp::getFrequency()
 {
 	return frequency;
 }
@@ -112,12 +118,12 @@ Ramp::getFrequency()
 //									Magazine
 //-------------------------------------------------------------------------------//
 
-Magazine::addProduct(Product* p)
+void Magazine::addProduct(Product* p)
 {
 	products.push_back(p);
 }
 
-Magazine::getProducts()
+vector<Products*> Magazine::getProducts()
 {
 	return products;
 }
@@ -133,7 +139,7 @@ Worker::Worker(int id, float time, QueueType queue)
 	qType = queue;
 }
 
-Worker::work(float time)
+void Worker::work(float time)
 {
 	if (time == endWork)
 	{
@@ -144,22 +150,22 @@ Worker::work(float time)
 
 }
 
-Worker:: addProduct( Product* p)
+void Worker::addProduct( Product* p)
 {
 	products.push(p);
 }
 
-Worker:: getID()
+int Worker:: getID()
 {
 	return _id;
 }
 
-Worker:: getQueueType()
+QueueType Worker:: getQueueType()
 {
 	return qType;
 }
 
-Worker:: getProducts()
+ProductQueue* Worker:: getProducts()
 {
 	return products;
 }

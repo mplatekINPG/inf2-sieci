@@ -2,8 +2,11 @@
 #define FACTORY_H
 
 #include <iostream>
+#include <map>
 #include <vector>
 #include <list>
+
+#include "Queue.h"
 
 class Product
 {
@@ -21,7 +24,7 @@ class Receiver
 {
 	public:
 		virtual void addProduct( Product* p ) = 0;
-		virtual std::vector<Product*> getProducts() = 0;
+		virtual ProductQueue* getProducts() = 0;
 };
 
 
@@ -33,12 +36,8 @@ class Sender
 	public:
 		void addReceiver( Receiver* r, float pref = -1 );
 		void send( Product* p );
-		std::map<receiver*,float> getReceivers();
+		std::map<Receiver*,float> getReceivers();
 };
-
-
-class Worker : public Receiver, public Sender;
-class Magazine : public Receiver;
 
 
 class Ramp : public Sender
@@ -59,12 +58,13 @@ class Ramp : public Sender
 class Magazine : public Receiver
 {
 	private:
-		std::vector<Product*> products;
+		ProductQueue * products;
+		QueueType qType = FIFO;
 	
 	public:
 		void addProduct( Product* p);
 		
-		std::vector<Product*> getProducts();
+		ProductQueue* getProducts();
 };
 
 
@@ -74,6 +74,7 @@ class Worker : public Receiver, public Sender
 		int _id;
 		float workTime;
 		float endWork;
+		QueueType qType;
 		ProductQueue* products;
 		Product* currentProduct;
 
@@ -85,5 +86,5 @@ class Worker : public Receiver, public Sender
 		int getID();
 		QueueType getQueueType();
 		ProductQueue* getProducts();
-}
+};
 #endif

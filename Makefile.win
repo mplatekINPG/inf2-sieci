@@ -4,8 +4,8 @@
 CPP      = g++.exe
 CC       = gcc.exe
 WINDRES  = windres.exe
-OBJ      = main.o Siec.o
-LINKOBJ  = main.o Siec.o
+OBJ      = main.o Siec.o Queue.o Factory.o
+LINKOBJ  = main.o Siec.o Queue.o Factory.o
 LIBS     = -L"D:/programy/Dev-Cpp/MinGW64/lib32" -L"D:/programy/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib32" -static-libgcc -m32
 INCS     = -I"D:/programy/Dev-Cpp/MinGW64/include" -I"D:/programy/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"D:/programy/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include"
 CXXINCS  = -I"D:/programy/Dev-Cpp/MinGW64/include" -I"D:/programy/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"D:/programy/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"D:/programy/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++"
@@ -29,3 +29,9 @@ main.o: main.cpp
 
 Siec.o: Siec.cpp
 	$(CPP) -c Siec.cpp -o Siec.o $(CXXFLAGS)
+
+Queue.o: Queue.cpp
+	$(CPP) -c Queue.cpp -o Queue.o $(CXXFLAGS)
+
+Factory.o: Factory.cpp
+	$(CPP) -c Factory.cpp -o Factory.o $(CXXFLAGS)

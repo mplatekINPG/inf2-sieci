@@ -1,6 +1,8 @@
 #ifndef QUEUE_H
 #define QUEUE_H
 
+class Product;
+
 enum QueueType { FIFO, LIFO };
 
 class ProductQueue
@@ -14,7 +16,7 @@ class ProductQueue
 	public:
 		virtual void push( Product* p) = 0;
 		virtual Product* pop() = 0;
-		QueueType getQueueType() const {return qType};
+		QueueType getQueueType() const { return qType; };
 };
 
 class ProductQueueFIFO : public ProductQueue

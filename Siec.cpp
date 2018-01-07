@@ -21,17 +21,17 @@ using std::string;
 //--------------------------------------------------------------//
 //--------------------------------------------------------------//
 
-Net::create()
+void Net::create()
 {	
 	// wczytanie pliku i test wczytania
     std::fstream dane;
     string linia;
     float pref;
         
-    dane.open( /*"TU PODAJEMY ŒCIE¯KÊ DO PLIKU.txt"*/, std::ios::in)
+    dane.open( /*"TU PODAJEMY ŒCIE¯KÊ DO PLIKU.txt"*/, std::ios::in);
     if (dane.good() == false)
 	{
-		cout << "brak dostepu do pliku !!"
+		cout << "brak dostepu do pliku !!";
 		return ;
 	}
 	
@@ -43,14 +43,14 @@ Net::create()
 		{
 			if (linia.find( "LOADING_RAMP" ) != std::string::npos)
 			{
-				Ramp::Ramp r( stoi(linia[16]), stof(linia[36]) ); //stoi - String TO Int
+				Ramp r( stoi(linia[16]), stof(linia[36]) ); //stoi - String TO Int
 				ramps.push_back(&r); 							  //stof - String TO Float
 				break;											
 			}
 			
 			if (linia.find( "STOREHOUSE" ) != std::string::npos)
 			{
-				Magazine::Magazine m( stoi(linia[14]) );
+				Magazine m( stoi(linia[14]) );
 				magazines.push_back(&m);
 				break;
 			}
@@ -58,9 +58,9 @@ Net::create()
 			if (linia.find( "WORKER" ) != std::string::npos)
 			{
 				if (linia.find( "FIFO" ) != std::string::npos) //2 rodzaje kolejek
-					Worker::Worker w( stoi(linia[11]), stof(linia[29]), LIFO);
+					Worker w( stoi(linia[11]), stof(linia[29]), LIFO);
 				else
-					Worker::Worker w( stoi(linia[11]), stof(linia[29]), FIFO);
+					Worker w( stoi(linia[11]), stof(linia[29]), FIFO);
 				workers.push_back(&w);
 				break;
 			}
@@ -122,8 +122,8 @@ Net::create()
 //--------------------------------------------------------------//
 //--------------------------------------------------------------//
 
-Net::update()
-{
+void Net::update()
+{ 
 	create();
 	int currentTime = 0;
 	endingSimulationTime = /*SK¥D TO WZI¥Æ??*/ ;
@@ -146,7 +146,7 @@ Net::update()
 //--------------------------------------------------------------//
 //--------------------------------------------------------------//
 
-Net::report()
+void Net::report()
 {
 	std::fstream raportStruktury;
 	raportStruktury.open( "struktura_sieci.txt", std::ios::out );

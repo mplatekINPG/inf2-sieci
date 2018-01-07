@@ -1,6 +1,8 @@
 #include "Queue.h"
 #include <list>
 
+#include "Factory.h"
+
 void ProductQueueFIFO::push(Product* p)
 {
 	products.push_back(p);

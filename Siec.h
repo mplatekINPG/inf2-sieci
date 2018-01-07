@@ -1,6 +1,10 @@
 #ifndef SIEC_H
 #define SIEC_H
 
+#include "Factory.h"
+#include "Queue.h"
+
+
 class Net
 {
 	private:
@@ -13,5 +17,5 @@ class Net
 		void create();
 		void update();
 		void report();
-}
+};
 #endif
