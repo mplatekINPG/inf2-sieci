@@ -14,7 +14,8 @@ class Product
 		int _id;
 		
 	public:
-		Product( int id );
+		Product();
+		int ids = 0;
 		
 		int getID();	
 };
@@ -47,8 +48,9 @@ class Ramp : public Sender
 		float frequency;
 		
 	public:
-		Ramp( int id, float freq );
+		Ramp( float freq );
 		void update( float time, Product* p );
+		int ids = 0;;
 		
 		int getID();
 		float getFrequency();
@@ -58,12 +60,15 @@ class Ramp : public Sender
 class Magazine : public Receiver
 {
 	private:
+		int _id;
 		ProductQueue * products;
 		QueueType qType = FIFO;
 	
 	public:
+		Magazine();
 		void addProduct( Product* p);
 		
+		int ids = 0;
 		ProductQueue* getProducts();
 };
 
@@ -79,9 +84,10 @@ class Worker : public Receiver, public Sender
 		Product* currentProduct;
 
 	public:
-		Worker( int id, float time, QueueType queue );
+		Worker( float time, QueueType queue );
 		void work( float time );
 		void addProduct( Product* p);
+		int ids = 0;
 		
 		int getID();
 		float getWorkTime();

@@ -19,9 +19,10 @@ using std::cin;
 //									Product
 //-------------------------------------------------------------------------------//
 
-Product::Product(int id)
+Product::Product()
 {
-	_id = id;
+	_id = ids;
+	ids++;
 }
 
 int Product::getID()
@@ -94,9 +95,10 @@ void Sender::getReceivers()
 //									Ramp
 //-------------------------------------------------------------------------------//
 
-Ramp::Ramp(int id, float freq)
+Ramp::Ramp(float freq)
 {
-	_id = id;
+	_id = ids;
+	ids++;
 	frequency = freq;
 }
 
@@ -122,6 +124,12 @@ float Ramp::getFrequency()
 //									Magazine
 //-------------------------------------------------------------------------------//
 
+Magazine::Magazine()
+{
+	_id = ids;
+	ids++;
+}
+
 void Magazine::addProduct(Product* p)
 {
 	products.push_back(p);
@@ -136,9 +144,10 @@ vector<Products*> Magazine::getProducts()
 //									Worker
 //-------------------------------------------------------------------------------//
 
-Worker::Worker(int id, float time, QueueType queue)
+Worker::Worker(float time, QueueType queue)
 {
-	_id = id;
+	_id = ids;
+	ids++;
 	workTime = time;
 	qType = queue;
 }
