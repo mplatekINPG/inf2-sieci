@@ -12,10 +12,11 @@ class Product
 {
 	private:
 		int _id;
+
+		static int ids;
 		
 	public:
 		Product();
-		int ids = 0;
 		
 		int getID();	
 };
@@ -49,8 +50,7 @@ class Ramp : public Sender
 		
 	public:
 		Ramp( float freq );
-		void update( float time, Product* p );
-		int ids = 0;;
+		void update( float time );
 		
 		int getID();
 		float getFrequency();
@@ -68,7 +68,6 @@ class Magazine : public Receiver
 		Magazine();
 		void addProduct( Product* p);
 		
-		int ids = 0;
 		ProductQueue* getProducts();
 };
 

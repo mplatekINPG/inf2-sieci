@@ -3,7 +3,7 @@
 #include <map>
 
 #include "Siec.h"
-#include "Factory.h"
+#include "factory.h"
 #include "Queue.h"
 
 /* run this program using the console pauser or add your own getch, system("pause") or input loop */

@@ -7,8 +7,6 @@
 #include <fstream>
 #include <string>
 
-#include "Factory.h"
-#include "Queue.h"
 
 //dyrektywy using, zamiast nielubiane using namespace. Raczej wystarcz¹
 using std::vector;
@@ -16,6 +14,7 @@ using std::list;
 using std::map;
 using std::cout;
 using std::cin;
+using std::endl;
 using std::string;
 using std::stoi;
 using std::stof;
@@ -99,7 +98,7 @@ void Net::create()
 									{
 										auto wsk = linia.find( "p=") + 2;
 										pref = stoi(wsk) + stoi(wsk+2)*0.1;
-										i.addReceiver(j,pref);
+										i->addReceiver(j,pref);
 									}
 									
 							if (linia.find( "dest=store" ) != std::string::npos)
@@ -108,7 +107,7 @@ void Net::create()
 									{
 										auto wsk = linia.find( "p=") + 2;
 										pref = stoi(wsk) + stoi(wsk+2)*0.1;
-										i.addReceiver(j,pref);
+										i->addReceiver(j,pref);
 									}
 						}
 					}
@@ -128,17 +127,17 @@ void Net::update()
 { 
 	create();
 	int currentTime = 0;
-	endingSimulationTime = /*SK¥D TO WZI¥Æ??*/ ;
+	endingSimulationTime = 100/*SK¥D TO WZI¥Æ??*/ ;
 	
 	while ( currentTime < endingSimulationTime)
 	{
 		//-------------tu trza stworzyæ producta----------------//
 		
 		for (auto i: ramps)
-			i.update(currentTime, /*PRODUKT*/);
+			i->update(currentTime);
 		
 		for (auto i: workers)
-			i.work(currentTime);
+			i->work(currentTime);
 		
 		//----//
 		currentTime++;
@@ -158,17 +157,21 @@ void Net::report()
 		raportStruktury << "1. Ramps" << endl << endl;
 		for (auto i: ramps)
 		{
-			raportStruktury << "\t ramp #" << i.getID() << "\n\tfreq = " << i.getFrequency() << endl;
+			raportStruktury << "\t ramp #" << i->getID() << "\n\tfreq = " << i->getFrequency() << endl;
 			raportStruktury << "\tReceivers:\n";
-			raportStruktury << "\t\t" << i.getReceivers(); <<endl;
+			raportStruktury << "\t\t";
+			i->getReceivers(); 
+			cout<<endl;
 		}
 		
 		raportStruktury << endl << "2. Workers" << endl << endl;
 		for (auto i: workers)
 		{
-			raportStruktury << "\t worker #" << i.getID() << "\n\twork time = " << i.getWorkTime() << endl;
-			raportStruktury << "\tReceivers:\n";
-			raportStruktury << "\t\t" << i.getReceivers(); <<endl;
+			raportStruktury << "\t worker #" << i->getID() << "\n\twork time = " << i->getWorkTime() << endl;
+			raportStruktury<< "\tReceivers:\n";
+			raportStruktury << "\t\t";
+			i->getReceivers(); 
+			cout<<endl;
 		}
 		
 		raportStruktury << endl << "3. Storehouses" << endl << endl;

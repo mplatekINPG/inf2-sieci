@@ -1,7 +1,7 @@
 #ifndef SIEC_H
 #define SIEC_H
 
-#include "Factory.h"
+#include "factory.h"
 #include "Queue.h"
 
 

@@ -1,23 +1,27 @@
-#include "Factory.h"
+#include "factory.h"
 #include "Siec.h"
 
 #include <iostream>
+#include <cmath>
 #include <vector>
 #include <list>
 #include <map>
 #include <utility>
 
-//dyrektywy using, zamiast nielubiane using namespace. Raczej wystarczï¿½
+//dyrektywy using, zamiast nielubiane using namespace. Raczej wystarczÃ¯Â¿Â½
 using std::vector;
 using std::map;
 using std::cout;
 using std::cin;
+using namespace std; //XD
 
 
 
 //-------------------------------------------------------------------------------//
 //									Product
 //-------------------------------------------------------------------------------//
+
+int Product::ids = 0;
 
 Product::Product()
 {
@@ -39,28 +43,30 @@ int Product::getID()
 //									Sender
 //-------------------------------------------------------------------------------//
 
-void Sender::addReceiver( Receiver* r, float pref = -1)
+void Sender::addReceiver( Receiver* r, float pref)
 {	
 	if (receivers.size() == 0) 
-		receiver.insert(std::pair<Receiver*,float>(r,1.0));
+		receivers.insert(std::pair<Receiver*,float>(r,1.0));
 		
-/*	Dodanie nowego odbiorcy do puli odbiorców danego wêz³a 
-	bez precyzowania prawdopodobieñstwa powoduje ustawienie 
-	preferencji na rozk³ad jednostajny.*/
+/*	Dodanie nowego odbiorcy do puli odbiorcÃ³w danego wÃªzÂ³a 
+	bez precyzowania prawdopodobieÃ±stwa powoduje ustawienie 
+	preferencji na rozkÂ³ad jednostajny.*/
+
+	///Prawdopodobnie nie zmienia wszystkich i trzeba bÄ™dzie poprawiÄ‡
 	else if (pref == -1)
 	{
 		for (auto i=receivers.begin(); i!=receivers.end(); i++)
 			i->second = 1/( receivers.size() + 1 );
 			
-		receivers.insert(std::pair<Receiver*,float>(r,receivers[0]->second);
+		receivers.insert(std::pair<Receiver*,float>(r,receivers.begin()->second));
 	}
-	//jak pref podany, to przelicza na nowo dla wszystkich (wzór od K³eczka)
+	//jak pref podany, to przelicza na nowo dla wszystkich (wzÃ³r od KÂ³eczka)
 	else
 	{
 		for (auto i=receivers.begin(); i!=receivers.end(); i++)
 			i->second = (1 - pref) * i->second;
 			
-		receivers.insert(std::pair<Receiver*,float>(r,pref);
+		receivers.insert(std::pair<Receiver*,float>(r,pref));
 	}
 }
 
@@ -71,7 +77,7 @@ void Sender::send( Product *p)
 	float sum = 0;
 
 	if ( receivers.size() != 0 )
-		for (auto i: receivers) 
+		for (auto i=receivers.begin(); i!=receivers.end(); i++) 
 		{
 			sum += i->second * 100;
 			if (choice <= sum)
@@ -87,7 +93,7 @@ void Sender::getReceivers()
 	if (receivers.size() == 0)
 		cout << "Brak polaczen\n";
 	
-	for (auto i: receivers)
+	for (auto i=receivers.begin(); i!=receivers.end(); i++)
 		cout << i->first << ", p = " << i->second << endl; 
 }
 
@@ -97,16 +103,14 @@ void Sender::getReceivers()
 
 Ramp::Ramp(float freq)
 {
-	_id = ids;
-	ids++;
 	frequency = freq;
 }
 
-void Ramp::update(float time, Product* p)
+void Ramp::update(float time)
 {
-	if (time%frequency == 0)
+	if (fmod(time,frequency) == 0)
 	{
-		send(p);
+		send(new Product);
 	}
 }
 
@@ -126,16 +130,14 @@ float Ramp::getFrequency()
 
 Magazine::Magazine()
 {
-	_id = ids;
-	ids++;
 }
 
 void Magazine::addProduct(Product* p)
 {
-	products.push_back(p);
+	products->push(p);
 }
 
-vector<Products*> Magazine::getProducts()
+ProductQueue* Magazine::getProducts()
 {
 	return products;
 }
@@ -157,7 +159,7 @@ void Worker::work(float time)
 	if (time == endWork)
 	{
 		send(currentProduct);
-		currentProduct = products.pop();
+		currentProduct = products->pop();
 		endWork += workTime;
 	}
 
@@ -165,7 +167,7 @@ void Worker::work(float time)
 
 void Worker::addProduct( Product* p)
 {
-	products.push(p);
+	products->push(p);
 }
 
 int Worker:: getID()

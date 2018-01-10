@@ -1,7 +1,7 @@
 #include "Queue.h"
-#include <list>
 
-#include "Factory.h"
+
+#include "factory.h"
 
 void ProductQueueFIFO::push(Product* p)
 {
