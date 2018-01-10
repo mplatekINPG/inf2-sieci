@@ -13,7 +13,7 @@ using std::vector;
 using std::map;
 using std::cout;
 using std::cin;
-using namespace std; //XD
+using namespace std; //XD //NIE, tak siê nie robi, to nie jest dobra praktyka programistyczna xD
 
 
 
@@ -101,8 +101,9 @@ void Sender::getReceivers()
 //									Ramp
 //-------------------------------------------------------------------------------//
 
-Ramp::Ramp(float freq)
+Ramp::Ramp(int id, float freq)
 {
+	_id = id;
 	frequency = freq;
 }
 
@@ -128,8 +129,9 @@ float Ramp::getFrequency()
 //									Magazine
 //-------------------------------------------------------------------------------//
 
-Magazine::Magazine()
+Magazine::Magazine(int id)
 {
+	_id = id;
 }
 
 void Magazine::addProduct(Product* p)
@@ -146,10 +148,9 @@ ProductQueue* Magazine::getProducts()
 //									Worker
 //-------------------------------------------------------------------------------//
 
-Worker::Worker(float time, QueueType queue)
+Worker::Worker(int id, float time, QueueType queue)
 {
-	_id = ids;
-	ids++;
+	_id = id;
 	workTime = time;
 	qType = queue;
 }

@@ -44,6 +44,7 @@ void Net::create()
 		{
 			if (linia.find( "LOADING_RAMP" ) != std::string::npos)
 			{
+			//	Ramp r( ramps.size(), stof(linia[36]) ); -> czytanie id z wektora wszystkich ramp //Poni¿ej -> czytanie znak po znaku z pliku wejœciowego
 				Ramp r( stoi(linia[16]), stof(linia[36]) ); //stoi - String TO Int
 				ramps.push_back(&r); 							  //stof - String TO Float
 				break;											
@@ -51,6 +52,7 @@ void Net::create()
 			
 			if (linia.find( "STOREHOUSE" ) != std::string::npos)
 			{
+			//	Magazine m( magazines.size() );
 				Magazine m( stoi(linia[14]) );
 				magazines.push_back(&m);
 				break;
@@ -59,8 +61,10 @@ void Net::create()
 			if (linia.find( "WORKER" ) != std::string::npos)
 			{
 				if (linia.find( "FIFO" ) != std::string::npos) //2 rodzaje kolejek
+				//Worker w( workers.size(), stof(linia[29]), LIFO);
 					Worker w( stoi(linia[11]), stof(linia[29]), LIFO);
 				else
+				//Worker w( workers.size(), stof(linia[29]), FIFO);
 					Worker w( stoi(linia[11]), stof(linia[29]), FIFO);
 				workers.push_back(&w);
 				break;

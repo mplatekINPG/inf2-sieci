@@ -49,7 +49,7 @@ class Ramp : public Sender
 		float frequency;
 		
 	public:
-		Ramp( float freq );
+		Ramp( int id, float freq );
 		void update( float time );
 		
 		int getID();
@@ -65,7 +65,7 @@ class Magazine : public Receiver
 		QueueType qType = FIFO;
 	
 	public:
-		Magazine();
+		Magazine(int id);
 		void addProduct( Product* p);
 		
 		ProductQueue* getProducts();
@@ -83,10 +83,9 @@ class Worker : public Receiver, public Sender
 		Product* currentProduct;
 
 	public:
-		Worker( float time, QueueType queue );
+		Worker( int id, float time, QueueType queue );
 		void work( float time );
 		void addProduct( Product* p);
-		int ids = 0;
 		
 		int getID();
 		float getWorkTime();
