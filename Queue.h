@@ -18,6 +18,7 @@ class ProductQueue
 		virtual void push( Product* p) = 0;
 		virtual Product* pop() = 0;
 		QueueType getQueueType() const { return qType; };
+		int getSize() const {return products.size();};
 };
 
 class ProductQueueFIFO : public ProductQueue

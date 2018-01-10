@@ -2,10 +2,14 @@
 
 
 #include "factory.h"
+#include<iostream>
+using namespace std;
 
 void ProductQueueFIFO::push(Product* p)
 {
+	cout << 3 << endl;	
 	products.push_back(p);
+	cout << 3 << endl;
 }
 
 
@@ -18,7 +22,9 @@ Product* ProductQueueFIFO::pop()
 
 void ProductQueueLIFO::push(Product* p)
 {
+	cout << 3 << endl;	
 	products.push_back(p);
+	cout << 3 << endl;
 }
 
 

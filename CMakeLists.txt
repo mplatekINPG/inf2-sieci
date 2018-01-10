@@ -7,7 +7,7 @@ set(SOURCES
 	main.cpp	
 	factory.h factory.cpp
 	Queue.h Queue.cpp
-	Siec.h Siec.cpp
+	#Siec.h Siec.cpp
 )
 
 

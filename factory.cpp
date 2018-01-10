@@ -75,14 +75,15 @@ void Sender::send( Product *p)
 	srand(time(NULL));
 	int choice = rand()%100;
 	float sum = 0;
-
 	if ( receivers.size() != 0 )
 		for (auto i=receivers.begin(); i!=receivers.end(); i++) 
 		{
 			sum += i->second * 100;
 			if (choice <= sum)
-			{
+			{			
+				cout << 4 << endl;				
 				(i->first)->addProduct(p);
+				cout << 4 << endl;
 				break;
 			}
 		}
@@ -110,8 +111,8 @@ Ramp::Ramp(int id, float freq)
 void Ramp::update(float time)
 {
 	if (fmod(time,frequency) == 0)
-	{
-		send(new Product);
+	{	
+		send(new Product());
 	}
 }
 
@@ -153,22 +154,41 @@ Worker::Worker(int id, float time, QueueType queue)
 	_id = id;
 	workTime = time;
 	qType = queue;
+	if(qType == LIFO)
+	{
+		products = new ProductQueueLIFO();	
+	}
+	else if(qType == FIFO)
+	{
+		products = new ProductQueueFIFO();	
+	}
 }
 
 void Worker::work(float time)
 {
 	if (time == endWork)
 	{
+		cout << "wysylam!!!!!!!" << currentProduct << endl;
+		
 		send(currentProduct);
+		cout << 2 << endl;
 		currentProduct = products->pop();
 		endWork += workTime;
+		
 	}
 
 }
 
 void Worker::addProduct( Product* p)
 {
+	cout << 2 << endl;
+	if(products->getSize() == 0)
+	{
+		endWork += workTime;
+		currentProduct = p;	
+	}	
 	products->push(p);
+	cout << 2 << endl;
 }
 
 int Worker:: getID()
